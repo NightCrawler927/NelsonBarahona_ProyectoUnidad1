@@ -1,152 +1,179 @@
 
-from calendar import c
-import datetime
+from ast import For
+from datetime import date, datetime
+from time import time
+
+#CREAMOS LAS LISTAS EN UN AMBITO GLOBAL 
+
+global lista_Usu
+global lista_Transacciones
+global lista_Clientes
+lista_Usu=list()
+lista_Clientes=list()
+lista_Transacciones=list()
+
+#SE CREA LA CLASE USUARIOS
+class Usuario:
+    Id=0
+    Usuario=""
+    Clave=""
+    Nombres=""
+    Apellidos=""
+
+def Registro_Usuario():
+    print("****** Registro de Usuarios ******")
+    a=Usuario()
+    a.Id=input("Ingrese Id: ")
+    a.Usuario=input("Ingrese Usuario: ")
+    a.Clave=input("Ingrese Clave: ")
+    a.Nombres=input("Ingrese Nombres: ")
+    a.Apellidos=input("Ingrese Apellidos: ")
+    lista_Usu.append(a)
+
+def Mostrar_Usuarios():
+    print("****** Lista de Usuarios Registrados ******")
+    for a in lista_Usu:
+        print (a.Id, "-",a.Usuario, "-",a.Nombres, "-",a.Apellidos)
+
+def Iniciar_Sesion():
+    print("****** Inicio de Sesión ******")
+    Usu=input("Ingrese Usuario: ")
+    Cla=input("Ingrese Clave: ")
+
+    #RECCORRE LA LISTA PARA LOCALIZAR EL USUARIO Y CONTRASEÑA QUE COINCIDA
+    for a in lista_Usu:
+        if a.Usuario==Usu and a.Clave==Cla:
+            #PASA AL MENU DE LOS SERVICIOS BANCARIOS
+            print("###### Menu Servicios Bancarios - Usuario: " + Usu)
+            menu_Bancario()
+        else:
+            print("****** Datos ingresados no existen o son incorrectos ******")
+
+def menu_Usu():
+    op=0
+    Salir=4
+    while op != 4:
+        #Mostrar Menu
+        print("****** MENU PRINCIPAL ******")
+        print("1.- Registrar")
+        print("2.- Iniciar Sesión")
+        print("3.- Mostrar Usuarios")
+        print("4.- Salir")
+
+        op = int(input("Digite la opción deseada: "))
+        if op == 1:
+            Registro_Usuario()
+        elif op == 2:
+            Iniciar_Sesion()
+        elif op == 3:
+            Mostrar_Usuarios()
+        elif op == 4:
+           break
+
+#CREAMOS LA CLASE CLIENTES
+class Clientes:
+    Cedula=""
+    Nombres=""
+    Apellidos=""
+    Ncuenta=""
+    Saldo=""
+
+def Llenar_Clientes():
+    x=0
+    while x !=4:
+        a=Clientes()
+        a.Cedula=input("Ingrese Cédula: ")
+        a.Nombres=input("Ingrese Nombres: ")
+        a.Apellidos=input("Ingrese Apellidos: ")
+        a.Ncuenta=input("Ingrese Numero Cuenta: ")
+        a.Saldo=input("Ingrese Saldo: ")
+        lista_Clientes.append(a)
+        x=x+1
 
 
+    print("Lista de Clientes Registrados")
+    for a in lista_Clientes:
+        print ("Cedula:" + a.Cedula, "- Nombres: ",a.Nombres, "- Apellidos: ",a.Apellidos, "- Cuenta: ",a.Ncuenta, "- Saldo: ",a.Saldo)
 
-#listado de fechas feriados
+#SE CREA EL MENU DE LOS SERVICIOS BANCARIOS UNA VEZ QUE SE HAYA INICIADO SESION CORRECTAMENTE
 
-diaDeAñoNuevo=datetime.datetime(2022,1,1)
-lunesCarnaval=datetime.datetime(2022,2,28)
-martesCarnaval=datetime.datetime(2022,3,1)
-buenViernes=datetime.datetime(2022,4,15)
-pascua=datetime.datetime(2022,4,17)
-diaDeTrabajo=datetime.datetime(2022,5,1)
-batallaDePichincha=datetime.datetime(2022,5,23)
-diaSimonBolivar=datetime.datetime(2022,7,25)
-diaDeIdependencia=datetime.datetime(2022,8,10)
-independenciaGuayaquil=datetime.datetime(2022,10,9)
-diaMuertos=datetime.datetime(2022,11,2)
-independenciaDeCuenca=datetime.datetime(2022,11,3)
-fundacionQuito=datetime.datetime(2022,12,6)
-navidad=datetime.datetime(2022,12,25)
+def menu_Bancario():
+    op=0
+    Salir=4
+    while op != 4:
+        #Mostrar Menu
+        print("****** Menu de Servicios Bancarios ******")
+        print("1.- Ver Clientes")
+        print("2.- Depositos")
+        print("3.- Retiros")
+        print("4.- Salir")
+
+        op = int(input("Digite la opción deseada: "))
+        if op == 1:
+            Llenar_Clientes()
+        elif op == 2:
+            Depositos()
+        elif op == 3:
+            pass
+            Retiros()
+        elif op == 4:
+           break
 
 
+#CREAMOS LA CLASE PARA LAS TRANSACCIONES BANCARIAS
 
-#clase Cliente
-class bancoBarrial:
-    def __init__(self, nombre, telefono, nombreBanco,numeroCedula):
-        self.nombre=nombre
-        self.telefono=telefono
-        self.nombreBanco=nombreBanco
-        self.numeroCedula=numeroCedula
-    #Metodo registrar clave
-    def registrarse(self, clave):     
-       
-       clave=clave
+class Transacciones():
+    nMov=0
+    n_Cuenta=""
+    Valor=0
+    Tipo=""
+    Fecha=""
+    Depositante=""
 
-    #Metodo iniciar secion con numero de cedula y clave
-    def inicioSecion(self, usu,contra):
-        usu=usu
-        contra=contra
+#METODOS PARA REALIZAR LAS TRANSACCIONES
 
-fechaActual2=datetime.datetime.now()
+def Depositos():
+    print("****** Transacciones Bancarias: DEPOSITOS ******")
+    a=Transacciones()
+    a.nMov=input("Ingrese numero de movimiento: ")
+    a.n_Cuenta=input("Ingrese Cuenta: ")
+    a.Valor=int(input("Ingrese Valor: "))
+    a.Tipo="DEPOSITO"
+    a.Fecha=datetime.now()
+    a.Depositante=input("Ingrese Depositante: ")
+    if a.Valor<500:
+        lista_Transacciones.append(a)
+        print("Deposito realizado: ")
+        for a in lista_Transacciones:
+            print ("NMov: " + a.nMov, "- #Cuenta: ",a.n_Cuenta, "- Valor: ",a.Valor, "- Tipo Transaccion: ",a.Tipo, "- Fecha Actual: " ,a.Fecha, "- Depositante: ",a.Depositante)
+    else:
+        print("Valor no permitido")
+
+def Retiros():
+    print("****** Transacciones Bancarias: RETIROS ******")
+    a=Transacciones()
+    a.nMov=input("Ingrese numero de movimiento:  ")
+    a.n_Cuenta=input("Ingrese Cuenta: ")
+    a.Valor=int(input("Ingrese Valor: "))
+    a.Tipo="RETIRO"
+    a.Fecha=datetime.now()
+    if a.Valor<500:
+        lista_Transacciones.append(a)
+        print("Retiros realizado: ")
+        for a in lista_Transacciones:
+            print ("NMov: " + a.nMov, "- #Cuenta: ",a.n_Cuenta, "- Valor: ",a.Valor, "- Tipo Transaccion: ",a.Tipo, "- Fecha Actual: " ,a.Fecha, "- Depositante: ",a.Depositante)
+    else:
+        print("Valor no permitido")
+
+#VERIFICAMOS QUE LA FECHA ACTUAL NO SEA FESTIVO PARA PODER EJECUTAR
+fechaActual=datetime.now()
+fechax=fechaActual.strftime("%y-%m-%d")
 
 #menu principal
-if fechaActual2!=diaDeAñoNuevo:
-                                          
-            
- subMenu2=int(input("============================\n Menu Banco Barrial: \n 1-Registrarse \n 2-Iniciar sesion \n 3-salir \n============================\n Ingrese una opcion: ")) 
- while subMenu2 != 3:
-     if subMenu2 ==1:
-         print("Registrarse en Banco Barrial ")
-         nombreBanco=str(input("Ingrese nombre de Banco: "))
-         nombre=str(input("Ingrese nombre de cuenta: "))
-         telefono=str(input("Ingrese su telefono: "))
-         numeroCedula=str(input("Ingrese su cedula: "))
-         clave=str(input("Ingrese clave para registrar: "))
-         z=bancoBarrial(nombre, telefono,nombreBanco,numeroCedula,).registrarse(clave)       #instanciar cliente y metodo registrarse
-         print("usted se a registrado")
 
-     elif subMenu2 ==2:
-         print("Inicie sesion")
-
-         print("A continuacion ingrese los datos: ")
-        #metodo iniciosesion comparar clave y numero de cedula ingresada para acceder
-         usu=str(input("Ingrese nombre de cuenta ya registrado: "))
-         contra=str(input("Ingrese contraseña ya registrado: "))
-         if usu==nombre and contra==clave:
-              print("Acceso concedido")
-             #submenu3
-              subMenu3=int(input("============================\n Sub Menu Movimientos 2: \n 1-Depositar \n 2-Retirar \n 3-Mostrar Monto \n 4-Regresar \n============================\n Ingrese una opcion: "))
-              while subMenu3 != 4:
-                  if subMenu3 ==1:
-
-                    
-                     monto=int(input("Ingrese monto de deposito a realizar: "))
-
-                     if monto<501:
-                       print("______________________________________________\n")
-                       print("               Registro de Deposito: \n")
-                       print("Nombre Banco: ",nombreBanco)
-                       print("Nombre de Cuenta: ",nombre)
-                       print("Numero Telefono: ",telefono)
-                       print("Numero Cedula: ",numeroCedula)
-                       fechaActual=datetime.datetime.now()
-                       fechaActual1=datetime.datetime.strftime(fechaActual, '%b %d %Y %H:%M:%S')
-                       print("Cantidad Depositada:",monto," Fecha de movimiento ",fechaActual1)
-                       print("______________________________________________\n")
-                     else:
-                           print("Error no puede depositar mas de 500 vuelva a intentar")          
-                                
-
-                  elif subMenu3 ==2:
-
-                     retiro=int(input("Ingrese monto de retiro a realizar, maximo hasta 500: "))
-
-                     if monto>retiro:
-                         
-                         if retiro<501:
-
-                            retiroTotal=monto-retiro
-
-                            print("______________________________________________\n")
-                            print("              Registro de Retiro              ")
-                            print("Nombre Banco: ",nombreBanco)
-                            print("Nombre de Cuenta: ",nombre)
-                            print("Numero Telefono: ",telefono)
-                            print("Numero Cedula: ",numeroCedula)
-                            fechaActual=datetime.datetime.now()
-                            fechaActual1=datetime.datetime.strftime(fechaActual, '%b %d %Y %H:%M:%S')
-                            print("Cantidad retirada:",retiro," Fecha de movimiento ",fechaActual1)
-                            print("______________________________________________\n")
-
-                         else:
-                             print("su retiro no puede ser mayor a 500 vuelva a intentar")
-                            
-                             
-
-                     else:
-                        print("error su retiro no debe ser mayor a tu monto de cuenta")
-                        print("vuelva a intentar")
-
-
-                    
-                  elif subMenu3 ==3:
-                     
-                    
-                     print("monto total",retiroTotal)
-
-
-                  elif subMenu3 ==4:
-                     print("Regresar ")
-
-                  else:
-                     print("Por favor ingrese una opcion correcta: ")
-                  subMenu3=int(input("============================\n Sub Menu Clientes 2: \n 1-Depositar \n 2-Retirar \n 3-Transferir \n 4-Regresar \n============================\n Ingrese una opcion: "))
-         else:
-             print("acceso denegado")
-     elif subMenu2 ==3:
-         print("salir ")
-     else:
-          print("Por favor ingrese una opcion correcta: ")
-     subMenu2=int(input("============================\n Menu Banco Barrial: \n 1-Registrarse \n 2-Iniciar sesion \n 3-salir \n============================\n Ingrese una opcion: ")) 
+if fechax != "22-01-01" and "2022-01-02" and "2022-01-03" and "2022-02-28" and "2022-03-01" and "2022-03-02" and "2022-04-11" and "2022-04-12" and "2022-04-13" and "2022-04-14" and "2022-04-15" and "2022-04-16" and "2022-04-17" and "2022-05-24" and "2022-12-25":
+    print(">>>>>>>Bienvenido a los Servicios Bancarios <<<<<<<<")
+    menu_Usu()
 else:
-    print("_____________________________________________________________________\n")
-    print("No se puede hacer transaccion en Dias feriados intentelo mas tarde")
-    print("_____________________________________________________________________\n")
-
-    
-         
-
+    print("No trabajamos en dias festivos, gracias por su comprension")
 
