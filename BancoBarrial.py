@@ -394,19 +394,20 @@ class Transacciones():
         """ se instancia el objeto giro_Bancario """
         giro_Bancario=Transacciones()
         giro_Bancario.num_Cuenta=input("Ingrese numero de Cuenta: ")
-        giro_Bancario.Valor=int(input("Ingrese Monto a depositar (solo numeros): "))
-        for movimientos in range(giro_Bancario.Valor):
-            giro_Bancario.num_Movimienton=giro_Bancario.Valor-1
+        giro_Bancario.Valor=input("Ingrese Monto a depositar (solo numeros): ")
 
         while Transacciones.es_numerico(giro_Bancario.Valor):
             print("Valor digitado no es numerico")
-            giro_Bancario.Valor= int(input("Ingrese Monto a depositar (solo numeros): "))
-            giro_Bancario.Tipo="DEPOSITO"
+            giro_Bancario.Valor= input("Ingrese Monto a depositar (solo numeros): ")
+        giro_Bancario.Valor=int(giro_Bancario.Valor)
+        giro_Bancario.Tipo="DEPOSITO"
         giro_Bancario.Fecha=datetime.now()
         giro_Bancario.Depositante=input("Ingrese Depositante: ")
         if giro_Bancario.Valor<500:
             lista_Transacciones.append(giro_Bancario)
             print("Deposito realizado: ")
+            for movimientos in range(giro_Bancario.Valor):
+                giro_Bancario.num_Movimienton=giro_Bancario.Valor-1
             for giro_Bancario in lista_Transacciones:
                 print ("Numero de Movimiento: ", giro_Bancario.num_Movimienton, "- Num. Cuenta: ",giro_Bancario.num_Cuenta, "- Valor: ",giro_Bancario.Valor, "$ - Tipo Transaccion: ",giro_Bancario.Tipo, "- Fecha: " ,giro_Bancario.Fecha, "- Depositante: ",giro_Bancario.Depositante)
         else:
@@ -421,13 +422,12 @@ class Transacciones():
         """ se vuelve a instanciar el objeto para la otra clase """
         giro_Bancario=Transacciones()
         giro_Bancario.num_Cuenta=input("Ingrese numero de Cuenta: ")
-        giro_Bancario.Valor=int(input("Ingrese Monto (solo numeros): "))
-        for movimientos in range(giro_Bancario.Valor):
-            giro_Bancario.num_Movimienton=giro_Bancario.Valor+1
+        giro_Bancario.Valor=input("Ingrese Monto (solo numeros): ")
 
         while Transacciones.es_numerico(giro_Bancario.Valor):
           print("Valor digitado no es numerico")
-          giro_Bancario.Valor= int(input("Ingrese Monto (solo numeros): "))
+          giro_Bancario.Valor= input("Ingrese Monto (solo numeros): ")
+        giro_Bancario.Valor=int(giro_Bancario.Valor)
         giro_Bancario.Tipo="RETIRO"
         giro_Bancario.Fecha=datetime.now()
         giro_Bancario.Depositante="Sin depositante por ser retiro"
@@ -435,6 +435,8 @@ class Transacciones():
         if giro_Bancario.Valor<500:
             lista_Transacciones.append(giro_Bancario)
             print("Retiros realizado: ")
+            for movimientos in range(giro_Bancario.Valor):
+                giro_Bancario.num_Movimienton=giro_Bancario.Valor+1
             for giro_Bancario in lista_Transacciones:
                 print ("Numero de Movimiento: ", giro_Bancario.num_Movimienton, "- Num. Cuenta: ",giro_Bancario.num_Cuenta, "- Valor: ",giro_Bancario.Valor, "$ - Tipo Transaccion: ",giro_Bancario.Tipo, "- Fecha: " ,giro_Bancario.Fecha, "- Depositante: ",giro_Bancario.Depositante)
         else:
@@ -449,6 +451,7 @@ class Transacciones():
         except ValueError:
             return True
 
+#no harcorear
 
 if __name__ == '__main__':
 
